@@ -90,6 +90,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         //eleicoesResult = await getResult(DEFAULT_DATA_URL);
+        await Task.FromResult(string.Empty);
     }
 
     public async Task<LegislativaResult> getResult(string datasetURL)
