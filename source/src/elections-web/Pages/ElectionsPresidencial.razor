@@ -1,0 +1,133 @@
+@page "/eleicao-presidencial"
+@using BlazorWasmApp.Data.Elections.Presidencial
+@using System.Text.Json;
+@inject HttpClient Http
+
+<h1>Eleições Presidencial</h1>
+
+<p>Dados de:  @SelectedUrl</p>
+
+<select Id="SelectedDataUrl" class="form-control" @onchange="ChangeUrl">
+
+    <option value="Select" selected disabled="disabled">(Escolha ano)</option>
+    @foreach (var data in DataUrlList)
+    {
+<option value="@data.Url">@data.Value</option>}
+</select>
+
+@if (eleicoesResult == null)
+{
+<p><em>Loading...</em></p> }
+else
+{
+<div>
+    <details>
+        <summary>Detalhes @eleicoesResult.Ano</summary>
+        <dl>
+            <dt>Titulo</dt>
+            <dd>@eleicoesResult.Titulo</dd>
+
+            <dt>Ano</dt>
+            <dd>@eleicoesResult.Ano</dd>
+
+            <dt>Generate Date</dt>
+            <dd>@eleicoesResult.GenDate</dd>
+
+            <dt>Scrapper</dt>
+            <dd>@eleicoesResult.GenScrapper</dd>
+        </dl>
+    </details>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <caption>Eleições Presidenciais</caption>
+        <colgroup span="1"></colgroup>
+        <colgroup span="3" style="background-color:lightgreen; border: 1px solid green;"></colgroup>
+        <colgroup span="3" style="background-color:lightblue; border: 1px solid blue;"></colgroup>
+        <thead>
+            <tr>
+                <th colspan="1" scope="colgroup">Região</th>
+                <th colspan="3" scope="colgroup">Eleitores</th>
+                <th colspan="3" scope="colgroup">Votos</th>
+            </tr>
+
+            <tr>
+                <th scope="col">Cirulo Eleitoral</th>
+
+                <th scope="col">Inscritos</th>
+                <th scope="col">Votantes</th>
+                <th scope="col">Abstencao</th>
+
+                <th scope="col">Votos Valido</th>
+                <th scope="col">Votos Nulo</th>
+                <th scope="col">Votos Branco</th>
+            </tr>
+        </thead>
+        <tbody>
+            <Virtualize Context="regiao" Items="@eleicoesResult.Regioes">
+
+                <tr>
+                    <td>@regiao.Nome (<a href="@(regiao.Url)" target="_blank">CNE</a>)</td>
+                    <td>@regiao.Inscritos</td>
+                    <td>@regiao.Votantes</td>
+                    <td>@regiao.Abstencao</td>
+                    <td>@regiao.VotosValido</td>
+                    <td>@regiao.VotosNulo</td>
+                    <td>@regiao.VotosBranco</td>
+                </tr>
+            </Virtualize>
+        </tbody>
+    </table>
+        </div>
+        }
+
+        @code { //private List<Regiao> regioes;
+        private PresidencialResult eleicoesResult;
+        private readonly string BASE_URL = "https://raw.githubusercontent.com";
+        private readonly string DEFAULT_DATA_URL = "/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-presidenciais-2016.json";
+
+        /*
+        protected override async Task OnInitializedAsync()
+        {
+            //eleicoesResult = await getResult(DEFAULT_DATA_URL);
+        }
+        */
+        public async Task<PresidencialResult> getResult(string datasetURL)
+        {
+            var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(BASE_URL);
+
+            return await httpClient.GetFromJsonAsync<PresidencialResult>(datasetURL);
+        } }
+
+        @code { private string SelectedUrl;
+
+            List<DataURL> DataUrlList = new List<DataURL>()
+            {
+        new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-presidenciais-1991.json", "1991"),
+        new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-presidenciais-1996.json", "1996"),
+        new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-presidenciais-2001.json", "2001"),
+        new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-presidenciais-2006.json", "2006"),
+        new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-presidenciais-2011.json", "2011"),
+        new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-presidenciais-2016.json", "2016"),
+    };
+
+            private async Task ChangeUrl(ChangeEventArgs e)
+            {
+                //SelectedYear = Convert.ToInt32();
+                SelectedUrl = BASE_URL + "" + e.Value.ToString();
+                eleicoesResult = await getResult(SelectedUrl);
+            }
+
+            public class DataURL
+            {
+                public DataURL(string url, string value)
+                {
+                    Url = url;
+                    Value = value;
+                }
+                public string Url { get; set; }
+                public string Value { get; set; }
+
+            } }

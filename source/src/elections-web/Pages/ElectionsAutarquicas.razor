@@ -1,0 +1,158 @@
+@page "/eleicao-autarquica"
+@using BlazorWasmApp.Data.Elections
+@using System.Text.Json;
+@inject HttpClient Http
+
+<h1>Eleições Autárquicas</h1>
+
+<p>Dados de:  @SelectedUrl</p>
+
+<select Id="SelectedDataUrl" class="form-control" @onchange="ChangeUrl">
+    <option value="Select" selected disabled="disabled">(Escolha ano)</option>
+    @foreach (var data in DataUrlList)
+    {
+        <option value="@data.Url">@data.Value</option>
+    }
+</select>
+
+@if (eleicoesResult == null)
+{
+<p><em>Loading...</em></p> }
+else
+{
+<div>
+    <details>
+        <summary>Detalhes @eleicoesResult.Ano</summary>
+        <dl>
+            <dt>Titulo</dt>
+            <dd>@eleicoesResult.Titulo</dd>
+
+            <dt>Ano</dt>
+            <dd>@eleicoesResult.Ano</dd>
+
+            <dt>Generate Date</dt>
+            <dd>@eleicoesResult.GenDate</dd>
+
+            <dt>Scrapper</dt>
+            <dd>@eleicoesResult.GenScrapper</dd>
+        </dl>
+    </details>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <caption> Eleições Autarquicas</caption>
+        <colgroup span="2"></colgroup>
+        <colgroup span="5" style="background-color:lightgreen; border: 1px solid green;"></colgroup>
+        <colgroup span="5" style="background-color:lightblue; border: 1px solid blue;"></colgroup>
+        <thead>
+            <tr>
+                <th colspan="2" scope="colgroup">Região</th>
+                <th colspan="5" scope="colgroup">Câmara</th>
+                <th colspan="5" scope="colgroup">Assembleia</th>
+            </tr>
+
+
+            <tr>
+                <!-- Região Município  -->
+                <th scope="col">Cirulo Eleitoral</th>
+                <th scope="col">Ilha</th>
+
+                <!-- Camera: Inscritos -->
+                <th scope="col">Votantes</th>
+                <th scope="col">Abstencão</th>
+                <th scope="col">Votos Válidos</th>
+                <th scope="col">Votos Nulos</th>
+                <th scope="col">Votos Brancos</th>
+
+
+                <!-- Assembleia Inscritos: -->
+                <th scope="col">Votantes</th>
+                <th scope="col">Abstencão</th>
+                <th scope="col">Votos Válidos</th>
+                <th scope="col">Votos Nulos</th>
+                <th scope="col">Votos Brancos</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <Virtualize Context="regiao" Items="@eleicoesResult.Municipios">
+
+                <tr>
+                    <!-- Região -->
+                    <td>@regiao.Nome (<a href="@(regiao.Url)" target="_blank">CNE</a>)</td>
+                    <td>@regiao.CirculoNome</td>
+
+                    <!-- Camera -->
+                    <td>@regiao.Camara.Votantes</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>@regiao.Camara.VotosNulo</td>
+                    <td>@regiao.Camara.VotosBranco</td>
+
+                    <!-- Assembleia -->
+                    <td>@regiao.Assembleia.Votantes</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                    <td>@regiao.Assembleia.VotosNulo</td>
+                    <td>@regiao.Assembleia.VotosBranco</td>
+                </tr>
+            </Virtualize>
+        </tbody>
+    </table>
+</div>
+}
+    @code { //private List<Regiao> regioes;
+    private AutarquicaResult eleicoesResult;
+    private readonly string BASE_URL = "https://raw.githubusercontent.com";
+    private readonly string DEFAULT_DATA_URL = "/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-2016.json";
+
+    protected override async Task OnInitializedAsync()
+    {
+        //eleicoesResult = await getResult(DEFAULT_DATA_URL);
+    }
+
+    public async Task<AutarquicaResult> getResult(string datasetURL)
+    {
+        var httpClient = new HttpClient();
+        httpClient.BaseAddress = new Uri(BASE_URL);
+
+        return await httpClient.GetFromJsonAsync<AutarquicaResult>(datasetURL);
+    } }
+
+    @code {
+
+        private string SelectedUrl;
+
+        /* https://github.com/poolborges/caboverde-dataset/tree/master/caboverde-elections*/
+
+        List<DataURL> DataUrlList = new List<DataURL>()
+        {
+            new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-1991.json", "1991"),
+            new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-1996.json", "1996"),
+            new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-2000.json", "2000"),
+            new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-2004.json", "2004"),
+            new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-2008.json", "2008"),
+            new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-2012.json", "2012"),
+            new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-2016.json", "2016"),
+        };
+
+        private async Task ChangeUrl(ChangeEventArgs e)
+        {
+            //SelectedYear = Convert.ToInt32();
+            SelectedUrl = BASE_URL + "" + e.Value.ToString();
+            eleicoesResult = await getResult(SelectedUrl);
+        }
+
+        public class DataURL
+        {
+            public DataURL(string url, string value)
+            {
+                Url = url;
+                Value = value;
+            }
+            public string Url { get; set; }
+            public string Value { get; set; }
+
+        }
+    }

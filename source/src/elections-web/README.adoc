@@ -1,0 +1,191 @@
+= Elections
+
+
+== Features
+
+* Ordenar tabela por ordem alfabetica
+* Comparação
+* Candidatos (Foto, ...)
+* Camara (Orgão)
+
+
+== Conceitos
+
+* Candidatura (Partido, Individual/Independente, Grupo de Cidadão)
+* Candidato (Deputado Assembleia Nacional, Vareador Municipal, Deputado Assembleia Municipal)
+* Partido Politico
+* Grupo de Cidadão
+
+== Create 
+
+.Criar WPA 
+----
+dotnet new blazorwasm -o elections-web --pwa
+----
+
+----
+<select class="form-control" @bind="@SelectedUrl">
+----
+
+
+----
+<select class="form-control" @onchange="ChangeUrl">
+----
+
+
+== Hypermedia
+
+* HAL 
+* JSON for Linked Documents (JSON-LD)
+** HYDRA 
+
+{
+    "datasets": 
+    
+    {
+        "name": "Eleições Presidenciais",
+        "year": "1991",
+        "kind": "election_presidencial",
+        _
+    }
+}
+
+
+== Ontologies (Semantic Web)
+
+* Resource Description Framework (RDF)  - https://www.w3.org/RDF/
+* FOAF - http://xmlns.com/foaf/spec/
+** FOAF ontology 
+
+
+----
+Canditato: Person {
+    posicao: Integer
+}
+Partido : Organization {}
+GrupoCidadao: Group {}
+ElectionKind: Enum {.PRESIDENCIAL, .LEGISLATIVE, .AUTARQUICA}
+Election {date: YYYY-MM-DD, kind: ElectionKind}
+
+Canditatura: {
+    sigla: 
+    nome: 
+    canditatos: Canditato[]
+    by: {GrupoCidadao|Partido}
+    by_uri: URI 
+}
+
+Eleito {
+  posicao: Integer
+  nome: 
+  uri:
+}
+
+AutarquiaEleicoes: Eleicoes {
+    private final kind = AUTARQUICA;
+
+    candidaturasVM: List<Canditatura>
+    candidaturasDM: List<Canditatura>
+
+    eleitosVM: 
+    eleitosDM: 
+
+    pub AutarquiaEleicoes(){
+        super(AUTARQUICA)
+    }
+}
+
+
+urn:eleicoes:autarquica:2020:candidato:<codigo>
+urn:eleicoes:presidencial:2020:candidato:<codigo>
+urn:eleicoes:legislativa:2021:candidato:<codigo>
+----
+
+
+== ChartJS.Blazor (Chart)
+
+* https://github.com/mariusmuntean/ChartJs.Blazor
+* https://www.chartjs.org/
+
+
+== BlazorCharts 
+
+* https://www.webassemblyman.com/blazor/blazorcharts.html
+* https://github.com/Misfits-Rebels-Outcasts/Blazor-Charts
+
+Others
+
+* https://blazorman.z22.web.core.windows.net/
+* https://github.com/Misfits-Rebels-Outcasts/Blazor-Dashboard
+* https://github.com/Misfits-Rebels-Outcasts/Blazor-Sparkline
+
+
+.cproj Added library reference
+----
+<ItemGroup>
+    <ProjectReference Include="../Blazor-Charts/DonutChart/DonutChart.csproj" />
+</ItemGroup>
+----
+
+.index.html Include Chart Stylesheet. 
+----
+<head>
+    <link href="_content/PieChart/styles.css" rel="stylesheet" />
+    <link href="_content/DonutChart/styles.css" rel="stylesheet" />
+<head>
+----
+
+
+== Blazorize
+
+* https://github.com/stsrki/Blazorise
+
+Packages
+
+* Blazorise.Icons.FontAwesome
+* Blazorise.Bootstrap
+
+
+== Conference
+
+* Xamaring Developer
+* MonkeyFest
+* Xamaring Universe
+* Weekly Xamaring
+* PlanetXamaring (Featured Community Blog)
+* Xamaring Developers (youtube)
+
+== Blazor Client
+
+* Blazored.LocalStorage - https://github.com/Blazored/LocalStorage
+* Blazored.Modal - https://github.com/Blazored/Modal
+
+== Blazor Server
+
+* Entity Frame Core
+* Pomelo Ef Core MySql
+
+
+== Data
+
+* https://www.idea.int/data-tools/country-view/89/40
+
+
+=== Legislatica
+
+2016
+
+* Ulisses Correia e Silva venceu com maioria absoluta, elegendo 40 deputados, acima dos 29 do PAICV e dos 3 da UCID.
+* Ao todo votaram 229.337 cabo-verdianos, o que significou uma taxa de participação eleitoral de 65,97%.
+
+== Converter 
+
+* https://www.adobe.com/acrobat/online/pdf-to-excel.html
+* https://smallpdf.com/pdf-to-excel
+
+
+== Reference
+
+* https://try.mudblazor.com/
+* https://json2csharp.com/
+

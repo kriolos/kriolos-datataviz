@@ -1,0 +1,36 @@
+= Kriolos DataViz (KDV)
+
+
+KrioloOS Data Vizualization
+
+
+== Create 
+
+
+----
+dotnet new sln --name kriolos-dataviz
+dotnet sln add .\src\elections-web\elections-web.csproj
+dotnet sln list
+----
+
+----
+dotnet run -p .\src/elections-web/elections-web.csproj
+----
+
+== Provider
+
+* Tabular
+* Master->Detail
+* Charts
+
+
+== 
+
+* Votantes: Validos + Nulos + Brancos
+* Validos: Votantes - (Nulos + Brancos)
+* Abstenção: Inscritos - Votantes
+
+== Reference
+
+* https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-sln
+* https://dotnetnew.azurewebsites.net/
