@@ -1,0 +1,17 @@
+{
+    "baseUrl": "https://raw.githubusercontent.com",
+    "eleicoes": [
+        {
+            "nome": "Legislativa",
+            "anos": [
+                {"path": "/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-legislativas-2006.json", "year": "2006"}
+            ]
+        },
+        {
+            "nome": "Presidencial",
+            "anos": [
+                {"path": "", "year": ""}
+            ]
+        }
+    ]
+}
