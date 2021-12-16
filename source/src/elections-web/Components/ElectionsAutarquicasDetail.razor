@@ -1,10 +1,54 @@
-﻿using System;
-namespace electionsweb.Components
+﻿@using BlazorWasmApp.Data.Elections
+@using System.Text.Json;
+@namespace elections_web.Components
+
+@if (MunicipioResult == null)
 {
-	public class ElectionsAutarquicasDetail
-	{
-		public ElectionsAutarquicasDetail()
-		{
-		}
-	}
+    <p><em>Loading...</em></p>
 }
+else
+{
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <caption>Camara Municipal</caption>
+        <thead>
+            <tr>
+                <th>Sigla</th>
+                <th>Votos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <Virtualize Context="candidato" Items="@MunicipioResult.Camara.CandidatosResultados">
+                <tr>
+                    <td>@candidato.Sigla</td>
+                    <td>@candidato.Votos</td>
+                </tr>
+            </Virtualize>
+        </tbody>
+    </table>
+
+    <table class="table table-bordered table-striped">
+        <caption>Assembleia Municipal</caption>
+        <thead>
+            <tr>
+                <th>Sigla</th>
+                <th>Votos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <Virtualize Context="candidato" Items="@MunicipioResult.Assembleia.CandidatosResultados">
+                <tr>
+                    <td>@candidato.Sigla</td>
+                    <td>@candidato.Votos</td>
+                </tr>
+            </Virtualize>
+        </tbody>
+    </table>
+    </div>
+    }
+
+    @code {
+
+        [Parameter]
+        public Municipio MunicipioResult { get; set; }
+    }

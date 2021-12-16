@@ -11,8 +11,7 @@
     <option value="Select" selected disabled="disabled">(Escolha ano)</option>
     @foreach (var data in DataUrlList)
     {
-        <option value="@data.Url">@data.Value</option>
-    }
+<option value="@data.Url">@data.Value</option>}
 </select>
 
 @if (eleicoesResult == null)
@@ -39,70 +38,72 @@ else
     </details>
 </div>
 
-<div class="table-responsive">
-    <table class="table table-bordered table-striped">
-        <caption> Eleições Autarquicas</caption>
-        <colgroup span="2"></colgroup>
-        <colgroup span="5" style="background-color:lightgreen; border: 1px solid green;"></colgroup>
-        <colgroup span="5" style="background-color:lightblue; border: 1px solid blue;"></colgroup>
-        <thead>
-            <tr>
-                <th colspan="2" scope="colgroup">Região</th>
-                <th colspan="5" scope="colgroup">Câmara</th>
-                <th colspan="5" scope="colgroup">Assembleia</th>
-            </tr>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <caption> Eleições Autarquicas</caption>
+                        <colgroup span="2"></colgroup>
+                        <colgroup span="5" style="background-color:lightgreen; border: 1px solid green;"></colgroup>
+                        <colgroup span="5" style="background-color:lightblue; border: 1px solid blue;"></colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="2" scope="colgroup">Região</th>
+                                <th colspan="5" scope="colgroup">Câmara</th>
+                                <th colspan="5" scope="colgroup">Assembleia</th>
+                            </tr>
 
 
-            <tr>
-                <!-- Região Município  -->
-                <th scope="col">Cirulo Eleitoral</th>
-                <th scope="col">Ilha</th>
+                            <tr>
+                                <!-- Região Município  -->
+                                <th scope="col">Cirulo Eleitoral</th>
+                                <th scope="col">Ilha</th>
 
-                <!-- Camera: Inscritos -->
-                <th scope="col">Votantes</th>
-                <th scope="col">Abstencão</th>
-                <th scope="col">Votos Válidos</th>
-                <th scope="col">Votos Nulos</th>
-                <th scope="col">Votos Brancos</th>
+                                <!-- Camera: Inscritos -->
+                                <th scope="col">Votantes</th>
+                                <th scope="col">Abstencão</th>
+                                <th scope="col">Votos Válidos</th>
+                                <th scope="col">Votos Nulos</th>
+                                <th scope="col">Votos Brancos</th>
 
 
-                <!-- Assembleia Inscritos: -->
-                <th scope="col">Votantes</th>
-                <th scope="col">Abstencão</th>
-                <th scope="col">Votos Válidos</th>
-                <th scope="col">Votos Nulos</th>
-                <th scope="col">Votos Brancos</th>
-            </tr>
+                                <!-- Assembleia Inscritos: -->
+                                <th scope="col">Votantes</th>
+                                <th scope="col">Abstencão</th>
+                                <th scope="col">Votos Válidos</th>
+                                <th scope="col">Votos Nulos</th>
+                                <th scope="col">Votos Brancos</th>
+                            </tr>
 
-        </thead>
-        <tbody>
-            <Virtualize Context="regiao" Items="@eleicoesResult.Municipios">
+                        </thead>
+                        <tbody>
+                            <Virtualize Context="regiao" Items="@eleicoesResult.Municipios">
 
-                <tr>
-                    <!-- Região -->
-                    <td>@regiao.Nome (<a href="@(regiao.Url)" target="_blank">CNE</a>)</td>
-                    <td>@regiao.CirculoNome</td>
+                                <tr>
+                                    <!-- Região -->
+                                    <td>@regiao.Nome
+                                        (<a href="@(regiao.Url)" target="_blank">CNE</a>)
+                                        <a href='#' @onclick="@(() =>ShowDetail(regiao))" @onclick:preventDefault >View</a>
+                                    </td>
+                                    <td>@regiao.CirculoNome</td>
 
-                    <!-- Camera -->
-                    <td>@regiao.Camara.Votantes</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>@regiao.Camara.VotosNulo</td>
-                    <td>@regiao.Camara.VotosBranco</td>
+                                    <!-- Camera -->
+                                    <td>@regiao.Camara.Votantes</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>@regiao.Camara.VotosNulo</td>
+                                    <td>@regiao.Camara.VotosBranco</td>
 
-                    <!-- Assembleia -->
-                    <td>@regiao.Assembleia.Votantes</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>@regiao.Assembleia.VotosNulo</td>
-                    <td>@regiao.Assembleia.VotosBranco</td>
-                </tr>
-            </Virtualize>
-        </tbody>
-    </table>
-</div>
-}
-    @code { //private List<Regiao> regioes;
+                                    <!-- Assembleia -->
+                                    <td>@regiao.Assembleia.Votantes</td>
+                                    <td>N/A</td>
+                                    <td>N/A</td>
+                                    <td>@regiao.Assembleia.VotosNulo</td>
+                                    <td>@regiao.Assembleia.VotosBranco</td>
+                                </tr>
+                            </Virtualize>
+                        </tbody>
+                    </table>
+                </div>}
+@code { //private List<Regiao> regioes;
     private AutarquicaResult eleicoesResult;
     private readonly string BASE_URL = "https://raw.githubusercontent.com";
     private readonly string DEFAULT_DATA_URL = "/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-2016.json";
@@ -121,14 +122,12 @@ else
         return await httpClient.GetFromJsonAsync<AutarquicaResult>(datasetURL);
     } }
 
-    @code {
+@code { private string SelectedUrl;
 
-        private string SelectedUrl;
+            /* https://github.com/poolborges/caboverde-dataset/tree/master/caboverde-elections*/
 
-        /* https://github.com/poolborges/caboverde-dataset/tree/master/caboverde-elections*/
-
-        List<DataURL> DataUrlList = new List<DataURL>()
-        {
+            List<DataURL> DataUrlList = new List<DataURL>()
+            {
             new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-1991.json", "1991"),
             new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-1996.json", "1996"),
             new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-2000.json", "2000"),
@@ -138,22 +137,35 @@ else
             new DataURL ("/poolborges/caboverde-dataset/master/caboverde-elections/resultado-eleicao-autarquicas-2016.json", "2016"),
         };
 
-        private async Task ChangeUrl(ChangeEventArgs e)
-        {
-            //SelectedYear = Convert.ToInt32();
-            SelectedUrl = BASE_URL + "" + e.Value.ToString();
-            eleicoesResult = await getResult(SelectedUrl);
-        }
-
-        public class DataURL
-        {
-            public DataURL(string url, string value)
+            private async Task ChangeUrl(ChangeEventArgs e)
             {
-                Url = url;
-                Value = value;
+                //SelectedYear = Convert.ToInt32();
+                SelectedUrl = BASE_URL + "" + e.Value.ToString();
+                eleicoesResult = await getResult(SelectedUrl);
             }
-            public string Url { get; set; }
-            public string Value { get; set; }
 
-        }
+            public class DataURL
+            {
+                public DataURL(string url, string value)
+                {
+                    Url = url;
+                    Value = value;
+                }
+                public string Url { get; set; }
+                public string Value { get; set; }
+
+            } }
+
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    Boolean ShowDetail(Municipio municipio)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(ElectionsAutarquicasDetail.MunicipioResult), municipio);
+
+        Modal.Show<ElectionsAutarquicasDetail>($"Autarquia: {municipio.Nome}", parameters);
+        return false;
     }
+}
