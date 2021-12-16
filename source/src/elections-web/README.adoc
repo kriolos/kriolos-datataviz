@@ -57,14 +57,26 @@ dotnet new blazorwasm -o elections-web --pwa
 * FOAF - http://xmlns.com/foaf/spec/
 ** FOAF ontology 
 
+== Elecions Model
 
+URN Examples
+
+* urn:eleicoes:autarquica:2020:candidato:<codigo>
+* urn:eleicoes:presidencial:2020:candidato:<codigo>
+* urn:eleicoes:legislativa:2021:candidato:<codigo>
+
+.Model
 ----
 Canditato: Person {
     posicao: Integer
 }
+
 Partido : Organization {}
+
 GrupoCidadao: Group {}
+
 ElectionKind: Enum {.PRESIDENCIAL, .LEGISLATIVE, .AUTARQUICA}
+
 Election {date: YYYY-MM-DD, kind: ElectionKind}
 
 Canditatura: {
@@ -94,11 +106,6 @@ AutarquiaEleicoes: Eleicoes {
         super(AUTARQUICA)
     }
 }
-
-
-urn:eleicoes:autarquica:2020:candidato:<codigo>
-urn:eleicoes:presidencial:2020:candidato:<codigo>
-urn:eleicoes:legislativa:2021:candidato:<codigo>
 ----
 
 
@@ -146,6 +153,18 @@ Packages
 * Blazorise.Bootstrap
 
 
+== Blazored
+
+
+* Blazored.LocalStorage - https://github.com/Blazored/LocalStorage
+* Blazored.Modal - https://github.com/Blazored/Modal
+
+.Add Package
+[source, bash]
+----
+dotnet add package Blazored.Modal
+----
+
 == Conference
 
 * Xamaring Developer
@@ -155,10 +174,7 @@ Packages
 * PlanetXamaring (Featured Community Blog)
 * Xamaring Developers (youtube)
 
-== Blazor Client
 
-* Blazored.LocalStorage - https://github.com/Blazored/LocalStorage
-* Blazored.Modal - https://github.com/Blazored/Modal
 
 == Blazor Server
 
