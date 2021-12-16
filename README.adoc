@@ -1,0 +1,41 @@
+// Global settings
+:ascii-ids:
+:encoding: UTF-8
+:lang: pt_PT
+:icons: font
+:toc:
+:toc-placement!:
+:toclevels: 3
+:numbered:
+:stem:
+
+ifdef::env-github[]
+:imagesdir: https://raw.githubusercontent.com/kriolos/kriolos-datataviz/main/docs/images/
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+:badges:
+:doc-dir: https://github.com/kriolos/kriolos-datataviz/main/docs
+endif::[]
+
+[[doc]]
+= Kriolos Datataviz (kosDatataviz)
+:author: Copyright (c) 2020-2021 Paulo Borges.
+:revnumber: kosDatataviz-0.0.1-snapshot
+:revdate: {last-update-label} {docdatetime}
+:version-label!:
+
+
+ifdef::badges[]
+image:https://github.com/kriolos/kriolos-datataviz/actions/workflows/build.yml/badge.svg["Build Status", link="https://github.com/kriolos/kriolos-datataviz/actions/workflows/build.yml"]
+endif::[]
+
+== About
+
+kosDatataviz is a Data visualization build on BlazorWasm
+
+== References
+
+...
