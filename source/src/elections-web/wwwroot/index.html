@@ -6,14 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Security-Policy"
           content="base-uri 'self';
-               block-all-mixed-content;
-               default-src 'self';
-               img-src data: https:;
+               default-src 'self' https://raw.githubusercontent.com/poolborges/caboverde-dataset/;
+               img-src 'self' data:;
                object-src 'none';
                script-src 'self'
-                          'unsafe-eval';
-               style-src 'self';
-               upgrade-insecure-requests;">
+                          'unsafe-inline'
+                          'unsafe-eval'
+                          *;
+               script-src-elem 'self'
+                          'unsafe-inline';
+               script-src-attr 'self'
+                          'unsafe-inline';
+               style-src 'self'
+                         'unsafe-inline';">
     <title>Elections Dataviz</title>
     <base href="./" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
