@@ -40,4 +40,4 @@ jobs:
       #working-directory: ${{env.working-directory}}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./${{env.working-directory}}/bin/Release/net6.0/publish/wwwroot
+        publish_dir: ./source/src/elections-web/bin/Release/net6.0/publish/wwwroot
