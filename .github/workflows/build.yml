@@ -9,6 +9,10 @@ on:
 env:
   DOTNET_VERSION: '6.0.101' # The .NET SDK version to use
 
+defaults:
+  run:
+    working-directory: source/src/elections-web
+
 jobs:
   build:
 
