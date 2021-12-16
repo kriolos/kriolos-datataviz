@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace BlazorWasmApp.Data.Elections.Presidencial
+namespace KOS.Elections.Dataviz.Data.Pre
 {
 
     // PresidencialResult myDeserializedClass = JsonSerializer.Deserialize<PresidencialResult>(myJsonResponse);

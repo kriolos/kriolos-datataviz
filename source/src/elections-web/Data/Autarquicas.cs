@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace BlazorWasmApp.Data.Elections
+namespace KOS.Elections.Dataviz.Data.Aut
 {
     // Root myDeserializedClass = JsonSerializer.Deserialize<Root>(myJsonResponse);
-    public class CandidatosResultado
+    public class Candidato
     {
         [JsonPropertyName("sigla")]
         public string Sigla { get; set; }
@@ -41,7 +41,7 @@ namespace BlazorWasmApp.Data.Elections
         public string VotosNulo { get; set; }
 
         [JsonPropertyName("candidatosResultados")]
-        public List<CandidatosResultado> CandidatosResultados { get; set; }
+        public List<Candidato> CandidatosResultados { get; set; }
 
         [JsonPropertyName("eleitos")]
         public List<Eleito> Eleitos { get; set; }
@@ -66,7 +66,7 @@ namespace BlazorWasmApp.Data.Elections
         public string VotosNulo { get; set; }
 
         [JsonPropertyName("candidatosResultados")]
-        public List<CandidatosResultado> CandidatosResultados { get; set; }
+        public List<Candidato> CandidatosResultados { get; set; }
 
         [JsonPropertyName("eleitos")]
         public List<Eleito> Eleitos { get; set; }

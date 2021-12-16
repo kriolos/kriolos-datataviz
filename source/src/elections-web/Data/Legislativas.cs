@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace BlazorWasmApp.Data.Elections
+namespace KOS.Elections.Dataviz.Data.Leg
 {
     // Root myDeserializedClass = JsonSerializer.Deserialize<Root>(myJsonResponse);
     public class Candidato

@@ -4,12 +4,24 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Security-Policy"
+          content="base-uri 'self';
+               block-all-mixed-content;
+               default-src 'self';
+               img-src data: https:;
+               object-src 'none';
+               script-src 'self'
+                          'unsafe-eval';
+               style-src 'self';
+               upgrade-insecure-requests;">
     <title>Elections Dataviz</title>
     <base href="./" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
+    <link href="_framework/scoped.styles.css" rel="stylesheet" />
     <link href="elections-web.styles.css" rel="stylesheet" />
     <link href="manifest.json" rel="manifest" />
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
 </head>

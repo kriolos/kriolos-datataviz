@@ -23,14 +23,22 @@
 dotnet new blazorwasm -o elections-web --pwa
 ----
 
+.Build and Run
 ----
-<select class="form-control" @bind="@SelectedUrl">
+dotnet run
+dotnet watch run
 ----
 
+.Release
+----
+dotnet publish -c Release
+----
 
-----
-<select class="form-control" @onchange="ChangeUrl">
-----
+== Security and Policy
+
+* HSTS (Strict-Transport-Security)
+* CSP (Content Security Policy)
+
 
 
 == Hypermedia
