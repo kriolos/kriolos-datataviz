@@ -1,0 +1,42 @@
+name: GitHub Pages
+
+on:  
+  push:
+    tags:
+      - 'v*'
+
+env:
+  DOTNET_VERSION: '6.0.101' # The .NET SDK version to use
+
+defaults:
+  run:
+    working-directory: source/src/elections-web
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    #- name: Install WASM Tools Workload
+    #  run: dotnet workload install wasm-tools
+
+    - name: Install dependencies
+      run: dotnet restore
+      
+    - name: Publish
+      run: dotnet publish --configuration Release --no-restore
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./bin/Release/net6.0/publish/wwwroot
